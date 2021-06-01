@@ -34,7 +34,7 @@ namespace UnitTestProject1
         {
             BasicMaths bm = new BasicMaths();
             double res = bm.Multiply(10, 10);
-            Assert.AreEqual(res, 50);
+            Assert.AreEqual(res, 100);
         }
     }
 }
