@@ -26,8 +26,8 @@ namespace UnitTestProject1
         public void Test_DivideMethod()
         {
             BasicMaths bm = new BasicMaths();
-            double res = bm.divide(10, 5);
-            Assert.AreEqual(res, 2);
+            double res = bm.divide(5, 5);
+            Assert.AreEqual(res, 1);
         }
         [TestMethod]
         public void Test_MultiplyMethod()
