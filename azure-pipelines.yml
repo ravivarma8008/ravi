@@ -5,9 +5,14 @@
 
 trigger:
 - main
-
-pool:
-  vmImage: 'vs2017-win2016'
+stages:
+ - stage: Build
+   jobs:
+   - job: Build
+   
+     pool:
+       vmImage: 'vs2017-win2016'
+        
 
 variables:
   solution: '**/*.sln'
@@ -32,3 +37,28 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- stage: Deploy
+  jobs:
+   - job: Deploy
+     pool:
+       vmImage: 'vs2017-win2016'
+     steps:
+     - task: DownloadBuildArtifacts@0
+       inputs:
+         buildType: 'current'
+         downloadType: 'single'
+         downloadPath: '$(System.ArtifactsDirectory)'
+         artifactName: 'drop'
+     - task: AzureRmWebAppDeployment@4
+       inputs:
+         ConnectionType: 'AzureRM'
+         azureSubscription: 'ravjavSC'
+         appType: 'webApp'
+         WebAppName: 'pul-yaml-ravjav'
+         packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
