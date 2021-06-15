@@ -47,12 +47,12 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-    stages: Deploy
-    jobs:
-      job: Build
-      pool:
-        name: Hosted VS2017
-      steps: 
+stages: Deploy
+ - jobs:
+   job: Build
+    pool:
+    name: Hosted VS2017
+     steps: 
 - task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'current'
@@ -61,7 +61,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)'
     
 
-task: AzureRmWebAppDeployment@4
-inputs:
-  ConnectionType: 'AzureRM'
-  azureSubscription: ''   
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: ''   
