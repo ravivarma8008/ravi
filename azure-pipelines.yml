@@ -48,7 +48,7 @@ steps:
     publishLocation: 'Container'
 
 stages: Deploy
- - jobs:
+   jobs:
    job: Build
     pool:
     name: Hosted VS2017
